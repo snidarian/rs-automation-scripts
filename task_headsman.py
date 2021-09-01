@@ -24,6 +24,8 @@ def main():
         if instruction[2] == 'space':
             print("Space bar needs to be pressed")
             pyautogui.press('space')
+    # clear the instructions_list methods
+    instruction_list.clear()
         
 
 if __name__ == "__main__":
@@ -31,12 +33,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Program takes taskname.csv and executes cursor clicks and keypresses")
     args = parser.add_argument("taskfile", help="taskfile.csv in CWD")
     args = parser.parse_args()
+    # csv taskfile instruction data written into this python array
     instruction_list = []
-    duration = input("Duration between actions: ")
-    loop = input("looping? y/n")
-    if loop.upper == 'Y':
+    duration = input("Duration between clicks and keypresses: ")
+    loop = input("looping? (y/n) ")
+    if loop.upper() == 'Y':
         loop = True
-    elif loop.upper == 'N':
+    elif loop.upper() == 'N':
         loop = False
     between_loops = input("Time between loops? ")
     between_loops = int(between_loops)
@@ -45,6 +48,7 @@ if __name__ == "__main__":
     duration = int(duration)
     if loop == True:
         for _ in range(loop_iterations):
+            print(f"Starting task loop iteration {_}")
             main()
             # a tiny little bit of random interval noise between loops
             time.sleep((between_loops + random.randint(0, 2)))
