@@ -10,6 +10,9 @@ for _ in range(3):
     pyautogui.moveTo(600, 500, duration=0.5)
     pyautogui.click()
     time.sleep(3)
+    # performing a right click
+    pyautogui.rightClick()
+    time.sleep(3)
     
 
 
