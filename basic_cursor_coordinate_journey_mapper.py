@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 
-import pyautogui
 import pynput
 import csv
 import time
@@ -17,10 +16,19 @@ def on_click(x, y, button, pressed) -> None:
         print(f"Right click at ({x}, {y})")
         waypoint_journey_list.append([x, y, button.name])
 
+
 def on_press(key) -> None:
-    print(key)
-
-
+    # escape key stops the recording sequence for both listeners and freezes the current state of waypoint_journey_list array
+    if key == pynput.keyboard.Key.esc:
+        print("you pressed escape")
+        mouse_listener.stop()
+        # returning False stops the listener
+        return False
+    if key == pynput.keyboard.Key.space:
+        waypoint_journey_list.append([0, 0, "space"])
+        print(f"Space button pressed")
+    
+    
 # Set up two listener object threads, one for the mouse and one for the keyboard
 keyboard_listener = pynput.keyboard.Listener(
     on_press=on_press,
@@ -39,12 +47,17 @@ def main() -> None:
         
     except KeyboardInterrupt:
         print("\nProgram terminated manually.")
-        print(waypoint_journey_list)
+        print(f"Journey waypoints: {waypoint_journey_list}")
+        # This section will use the information stored in the waypoint_journey_list array to construct a csv of the waypoints
+        with open(f"{task_name}.csv", mode='w') as taskfile_csv:
+            taskfile_writer = csv.writer(taskfile_csv, delimiter=',')
+            for entry in waypoint_journey_list:
+                taskfile_writer.writerow([entry[0],entry[1],entry[2]])
 
-    # This section will use the information stored in the waypoint_journey_list array to construct a csv of the waypoints
 
 
 if __name__ == "__main__":
+    task_name = input("Enter a task name: ")
     waypoint_journey_list = []
     main()
 
