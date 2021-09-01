@@ -7,7 +7,10 @@ import pynput
 def on_click(x, y, button, pressed) -> None:
     print(x)
     print(y)
-    print(button)
+    if button.name == "left" and pressed == True:
+        print("you clicked left")
+    if button.name == "right" and pressed == True:
+        print("you clicked right")
     print(pressed)
 
 
@@ -15,4 +18,7 @@ with pynput.mouse.Listener(
     on_click=on_click,
     
 ) as listener:
-    listener.join()
+    try:
+        listener.join()
+    except KeyboardInterrupt:
+        print("\nProgram terminated manually.")
