@@ -18,16 +18,14 @@ RESET = Fore.RESET
 
 
 CURSOR_PATH_EFFECTS = [
-    pyautogui.easeInBack,
-    pyautogui.easeInCirc,
-    pyautogui.easeInSine,
-    pyautogui.easeOutQuart
+    pyautogui.easeInQuad,
+    pyautogui.easeOutQuad,
+    pyautogui.easeInOutQuad
 ]
 
 
 def choose_random_cursor_tween() -> object:
     effect = random.choice(CURSOR_PATH_EFFECTS)
-    print(effect)
     return effect
 
 
