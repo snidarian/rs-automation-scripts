@@ -14,6 +14,7 @@ from colorama import Fore
 RED = Fore.RED
 BLUE = Fore.BLUE
 GREEN = Fore.GREEN
+YELLOW = Fore.YELLOW
 RESET = Fore.RESET
 
 
@@ -75,8 +76,10 @@ if __name__ == "__main__":
         between_loops = int(between_loops)
         loop_iterations = input("Number of loop iterations: ")
         loop_iterations = int(loop_iterations)
-    # Display system datetime before process begins
+    # Display system datetime before process begins - Print statements before/after control color for os.system
+    print(YELLOW)
     os.system('date')
+    print(RESET)
     # If task loop requested, run for X number of iterations
     if loop == True:
         for _ in range(1, (loop_iterations + 1), 1):
