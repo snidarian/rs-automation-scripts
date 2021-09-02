@@ -9,6 +9,7 @@ import random
 from colorama import Fore
 
 
+
 # Terminal color escape sequences
 RED = Fore.RED
 BLUE = Fore.BLUE
@@ -17,23 +18,16 @@ RESET = Fore.RESET
 
 
 CURSOR_PATH_EFFECTS = [
-    pyautogui.easeInBack,pyautogui.easeInBounce, pyautogui.easeInCirc,
-    pyautogui.easeInCubic,pyautogui.easeInElastic,pyautogui.easeInExpo,
-    pyautogui.easeInOutBack,pyautogui.easeInOutBounce,pyautogui.easeInOutCirc,
-    pyautogui.easeInOutCubic,pyautogui.easeInOutElastic,pyautogui.easeInOutExpo,
-    pyautogui.easeInOutQuad,pyautogui.easeInOutQuart,pyautogui.easeInOutQuint,
-    pyautogui.easeInOutSine,pyautogui.easeInQuad,pyautogui.easeInQuart,
-    pyautogui.easeInQuint,pyautogui.easeInSine,pyautogui.easeOutBack,
-    pyautogui.easeOutBounce,pyautogui.easeOutCirc,pyautogui.easeOutCubic,
-    pyautogui.easeOutElastic,pyautogui.easeOutExpo,pyautogui.easeOutQuad,
-    pyautogui.easeOutQuart,pyautogui.easeOutQuint,pyautogui.easeInOutSine
+    pyautogui.easeInBack,
+    pyautogui.easeInCirc,
+    pyautogui.easeInSine,
+    pyautogui.easeOutQuart
 ]
 
 
-def choose_random_cursor_path() -> object:
+def choose_random_cursor_tween() -> object:
     effect = random.choice(CURSOR_PATH_EFFECTS)
     print(effect)
-    type(effect)
     return effect
 
 
@@ -52,9 +46,9 @@ def main():
         ynoise = random.randint(-2, +2)
         
         if instruction[2] == 'left':
-            pyautogui.leftClick((instruction[0]+xnoise), (instruction[1]+ynoise), duration=duration, tween=choose_random_cursor_path())
+            pyautogui.leftClick((instruction[0]+xnoise), (instruction[1]+ynoise), duration=duration, tween=choose_random_cursor_tween())
         if instruction[2] == 'right':
-            pyautogui.rightClick((instruction[0]+xnoise), (instruction[1]+ynoise), duration=duration, tween=choose_random_cursor_path())
+            pyautogui.rightClick((instruction[0]+xnoise), (instruction[1]+ynoise), duration=duration, tween=choose_random_cursor_tween())
         if instruction[2] == 'space':
             print("Space bar needs to be pressed")
             pyautogui.press('space')
@@ -88,7 +82,7 @@ if __name__ == "__main__":
     # If task loop requested, run for X number of iterations
     if loop == True:
         for _ in range(1, (loop_iterations + 1), 1):
-            print(f"Starting task loop iteration {RED}{_}{RESET}/{loop_iterations}")
+            print(f"Starting task loop iteration {GREEN}{_}{RESET}/{loop_iterations}")
             main()
             # a tiny little bit of random interval noise between loops
             time.sleep((between_loops + random.randint(0, 2)))
