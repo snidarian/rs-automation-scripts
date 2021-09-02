@@ -17,6 +17,7 @@ def main():
             instruction_list.append([int(row[0]), int(row[1]), row[2]])
     # execute instructions found in the list
     for instruction in instruction_list:
+        time.sleep(random.uniform(0.0, 0.4))
         if instruction[2] == 'left':
             pyautogui.leftClick(instruction[0], instruction[1], duration=duration)
         if instruction[2] == 'right':
@@ -46,6 +47,7 @@ if __name__ == "__main__":
     loop_iterations = input("Number of loop iterations: ")
     loop_iterations = int(loop_iterations)
     duration = int(duration)
+    # If task loop requested, run for X number of iterations
     if loop == True:
         for _ in range(loop_iterations):
             print(f"Starting task loop iteration {_}")

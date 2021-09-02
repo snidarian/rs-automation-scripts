@@ -20,7 +20,7 @@ def on_click(x, y, button, pressed) -> None:
 def on_press(key) -> None:
     # escape key stops the recording sequence for both listeners and freezes the current state of waypoint_journey_list array
     if key == pynput.keyboard.Key.esc:
-        print("you pressed escape")
+        print("You pressed escape. Waypoint sequencing terminated..")
         mouse_listener.stop()
         # returning False stops the listener
         return False
