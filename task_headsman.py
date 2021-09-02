@@ -17,11 +17,15 @@ def main():
             instruction_list.append([int(row[0]), int(row[1]), row[2]])
     # execute instructions found in the list
     for instruction in instruction_list:
+        # Variables to create variation in xy coordiantes and time between actions
         time.sleep(random.uniform(0.0, 0.4))
+        xnoise = random.randint(-2, +2)
+        ynoise = random.randint(-2, +2)
+        
         if instruction[2] == 'left':
-            pyautogui.leftClick(instruction[0], instruction[1], duration=duration)
+            pyautogui.leftClick((instruction[0]+xnoise), (instruction[1]+ynoise), duration=duration)
         if instruction[2] == 'right':
-            pyautogui.rightClick(instruction[0], instruction[1], duration=duration)
+            pyautogui.rightClick((instruction[0]+xnoise), (instruction[1]+ynoise), duration=duration)
         if instruction[2] == 'space':
             print("Space bar needs to be pressed")
             pyautogui.press('space')
