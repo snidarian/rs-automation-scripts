@@ -87,7 +87,7 @@ if __name__ == "__main__":
     os.system('date')
     # If task loop requested, run for X number of iterations
     if loop == True:
-        for _ in range(loop_iterations):
+        for _ in range(1, (loop_iterations + 1), 1):
             print(f"Starting task loop iteration {RED}{_}{RESET}/{loop_iterations}")
             main()
             # a tiny little bit of random interval noise between loops
