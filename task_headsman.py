@@ -10,6 +10,9 @@ from colorama import Fore
 
 
 
+SCREEN_RESOLUTION = pyautogui.size()
+
+
 # Terminal color escape sequences
 RED = Fore.RED
 BLUE = Fore.BLUE
@@ -29,6 +32,21 @@ def choose_random_cursor_tween() -> object:
     effect = random.choice(CURSOR_PATH_EFFECTS)
     return effect
 
+def skew_perfect_midpoints(x_mid, y_mid) -> int:
+    # skewing amount calculated randomly - This number is really important for skewing the midpoint
+    skew_factor = random.randint(1, 152000)
+    # chooses which way to skew
+    flip_flop = random.choice([True, False])
+    # make sure the ratios are correct - +30 would have a greater impact on Y than on X in 3880X1080 resolution
+    # divide each by the other
+    if flip_flop == True:
+        skewed_x = (x_mid + (skew_factor // SCREEN_RESOLUTION[1]))
+        skewed_y = (y_mid - (skew_factor) // SCREEN_RESOLUTION[0])
+    else:
+        skewed_x = (x_mid - ((skew_factor // SCREEN_RESOLUTION[1])))
+        skewed_y = (y_mid + ((skew_factor) // SCREEN_RESOLUTION[0]))
+    return skewed_x, skewed_y
+
 
 def main():
     # open a [task_name].csv file with csv library
@@ -39,16 +57,29 @@ def main():
             instruction_list.append([int(row[0]), int(row[1]), row[2]])
     # execute instructions found in the list
     for instruction in instruction_list:
-        # Variables to create variation in xy coordiantes and time between actions
+        # values read from .csv are set to more understandable variable names
+        x_destination = instruction[0]
+        y_destination = instruction[1]
+        command_action = instruction[2]
+        # Variables to create variation in xy click destination coordiantes and time between actions
         time.sleep(random.uniform(0.0, 0.4))
-        xnoise = random.randint(-2, +2)
-        ynoise = random.randint(-2, +2)
-        
-        if instruction[2] == 'left':
-            pyautogui.leftClick((instruction[0]+xnoise), (instruction[1]+ynoise), duration=duration, tween=choose_random_cursor_tween())
-        if instruction[2] == 'right':
-            pyautogui.rightClick((instruction[0]+xnoise), (instruction[1]+ynoise), duration=duration, tween=choose_random_cursor_tween())
-        if instruction[2] == 'space':
+        xnoise = random.randint(-3, +3)
+        ynoise = random.randint(-3, +3)
+        # When a mouse coordinate is determined half of the duration variable will be spend travelling to a SKEWED/OFFCENTER midpoint of the destination
+        # 1. Calculate current mouse xy coordinates
+        x_origin, y_origin = pyautogui.position()
+        # 2. Calculate exact midpoint (The absolute values of the differences of the origin and destination xs and ys)
+        x_midpoint, y_midpoint = abs((x_origin + x_destination) // 2), abs((y_origin + y_destination) // 2)
+        # 3. Skew that midpoint to one side
+        x_midpoint_skewed, y_midpoint_skewed = skew_perfect_midpoints(x_midpoint, y_midpoint)
+        # 4. Reach skewed midpoint with cursor using .moveTo() method and duration=(duration/2)
+        pyautogui.moveTo(x_midpoint_skewed, y_midpoint_skewed, duration=(duration/2))
+        # The remainder of the journey (ie from the midpoint will be travelled with the either of these methods)
+        if command_action == 'left':
+            pyautogui.leftClick((x_destination+xnoise), (y_destination+ynoise), duration=(duration/2))
+        if command_action == 'right':
+            pyautogui.rightClick((x_destination+xnoise), (y_destination+ynoise), duration=(duration/2))
+        if command_action == 'space':
             print("Space bar needs to be pressed")
             pyautogui.press('space')
     # clear the instructions_list methods
