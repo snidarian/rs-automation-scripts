@@ -13,10 +13,10 @@ reset = Fore.RESET
 
 count = 1
 display_header = True
-while count < 13:
+while count < 14:
     
     # Try to recognize green obstacle
-    nextobstacle = pyautogui.locateCenterOnScreen(f'green_clickboxes/g{count}.png', grayscale=False, confidence=0.7)
+    nextobstacle = pyautogui.locateCenterOnScreen(f'green_clickboxes/g{count}.png', grayscale=False, confidence=0.70)
     # if the try to recognize green obstacle fails, then try to recognize red obstacle.
     if nextobstacle == None:
         print(f"{red}F{reset}")
@@ -28,7 +28,7 @@ while count < 13:
         pyautogui.leftClick()
         display_header = True
         count+=1
-        time.sleep(6)
+        time.sleep(7)
 
         
         
