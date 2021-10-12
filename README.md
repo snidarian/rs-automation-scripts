@@ -34,3 +34,8 @@ The autotypers folders contains programs that will auto type messages (or sequen
 These are still in development and may still require quite a bit of development before they are reliable.
 
 
+
+
+
+
+
