@@ -91,6 +91,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Program takes taskname.csv and executes cursor clicks and keypresses")
     args = parser.add_argument("taskfile", help="taskfile.csv in CWD")
     args = parser.parse_args()
+    
     # csv taskfile instruction data written into this python array
     instruction_list = []
     duration = input("Duration between clicks and keypresses: ")
@@ -107,6 +108,7 @@ if __name__ == "__main__":
         between_loops = int(between_loops)
         loop_iterations = input("Number of loop iterations: ")
         loop_iterations = int(loop_iterations)
+    
     # Display system datetime before process begins - Print statements before/after control color for os.system
     print(YELLOW)
     os.system('date')

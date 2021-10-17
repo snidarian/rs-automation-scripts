@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-
+from pyautogui import _snapshot
 import pynput
 import csv
 import time
@@ -10,11 +10,11 @@ import time
 def on_click(x, y, button, pressed) -> None:
     if button.name == "left" and pressed == True:
         print(f"Left click at ({x}, {y})")
-        waypoint_journey_list.append([x, y, button.name])
-        
+        waypoint_journey_list.append([x, y, button.name, (time.perf_counter() - start)])
+
     if button.name == "right" and pressed == True:
         print(f"Right click at ({x}, {y})")
-        waypoint_journey_list.append([x, y, button.name])
+        waypoint_journey_list.append([x, y, button.name, (time.perf_counter() - start)])
 
 
 def on_press(key) -> None:
@@ -24,9 +24,8 @@ def on_press(key) -> None:
         mouse_listener.stop()
         # returning False stops the listener
         return False
-    if key == pynput.keyboard.Key.space:
-        waypoint_journey_list.append([0, 0, "space"])
-        print(f"Space button pressed")
+
+
     
     
 # Set up two listener object threads, one for the mouse and one for the keyboard
@@ -39,6 +38,9 @@ mouse_listener = pynput.mouse.Listener(
 )
 
 def main() -> None:
+    global start
+    start = time.perf_counter()
+    
     try:
         mouse_listener.start()
         keyboard_listener.start()
@@ -52,7 +54,11 @@ def main() -> None:
         with open(f"{task_name}.csv", mode='w') as taskfile_csv:
             taskfile_writer = csv.writer(taskfile_csv, delimiter=',')
             for entry in waypoint_journey_list:
-                taskfile_writer.writerow([entry[0],entry[1],entry[2]])
+                taskfile_writer.writerow([entry[0],entry[1],entry[2], entry[3]])
+    stop = time.perf_counter()
+    total = (stop - start)
+    print(f"Total time elapsed: {total}")
+    
 
 
 
