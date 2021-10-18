@@ -54,13 +54,14 @@ def main():
         taskfile_reader = csv.reader(taskfile_csv, delimiter=',')
         # read all waypoint rows into python datastructure that exists outside of csv_reader file object
         for row in taskfile_reader:
-            instruction_list.append([int(row[0]), int(row[1]), row[2]])
+            instruction_list.append([int(row[0]), int(row[1]), row[2], float(row[3])])
     # execute instructions found in the list
     for instruction in instruction_list:
         # values read from .csv are set to more understandable variable names
         x_destination = instruction[0]
         y_destination = instruction[1]
         command_action = instruction[2]
+        action_duration = instruction[3]
         # Variables to create variation in xy click destination coordiantes and time between actions
         time.sleep(random.uniform(0.0, 0.4))
         xnoise = random.randint(-5, +5)
@@ -73,12 +74,12 @@ def main():
         # 3. Skew that midpoint to one side
         x_midpoint_skewed, y_midpoint_skewed = skew_perfect_midpoints(x_midpoint, y_midpoint)
         # 4. Reach skewed midpoint with cursor using .moveTo() method and duration=(duration/2)
-        pyautogui.moveTo(x_midpoint_skewed, y_midpoint_skewed, duration=(duration/2))
+        pyautogui.moveTo(x_midpoint_skewed, y_midpoint_skewed, duration=(action_duration/2))
         # The remainder of the journey (ie from the midpoint will be travelled with the either of these methods)
         if command_action == 'left':
-            pyautogui.leftClick((x_destination+xnoise), (y_destination+ynoise), duration=(duration/2))
+            pyautogui.leftClick((x_destination+xnoise), (y_destination+ynoise), duration=(action_duration/2))
         if command_action == 'right':
-            pyautogui.rightClick((x_destination+xnoise), (y_destination+ynoise), duration=(duration/2))
+            pyautogui.rightClick((x_destination+xnoise), (y_destination+ynoise), duration=(action_duration/2))
         if command_action == 'space':
             print("Space bar needs to be pressed")
             pyautogui.press('space')
@@ -94,9 +95,7 @@ if __name__ == "__main__":
     
     # csv taskfile instruction data written into this python array
     instruction_list = []
-    duration = input("Duration between clicks and keypresses: ")
-    # Turn from string into integer
-    duration = float(duration)
+
     loop = input("looping? (y/n) ")
     if loop.upper() == 'Y':
         loop = True

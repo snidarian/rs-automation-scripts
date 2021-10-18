@@ -6,15 +6,19 @@ import csv
 import time
 
 
+
 # functions to trigger when keyboard keys are pressed for mouse is clicked
 def on_click(x, y, button, pressed) -> None:
     if button.name == "left" and pressed == True:
         print(f"Left click at ({x}, {y})")
         waypoint_journey_list.append([x, y, button.name, (time.perf_counter() - start)])
+        print(f"Left click at ({x}, {y})")
+        
 
     if button.name == "right" and pressed == True:
         print(f"Right click at ({x}, {y})")
         waypoint_journey_list.append([x, y, button.name, (time.perf_counter() - start)])
+        
 
 
 def on_press(key) -> None:
@@ -50,6 +54,8 @@ def main() -> None:
     except KeyboardInterrupt:
         print("\nProgram terminated manually.")
         print(f"Journey waypoints: {waypoint_journey_list}")
+        # For loop that transforms all duration values
+        
         # This section will use the information stored in the waypoint_journey_list array to construct a csv of the waypoints
         with open(f"{task_name}.csv", mode='w') as taskfile_csv:
             taskfile_writer = csv.writer(taskfile_csv, delimiter=',')
@@ -57,10 +63,8 @@ def main() -> None:
                 taskfile_writer.writerow([entry[0],entry[1],entry[2], entry[3]])
     stop = time.perf_counter()
     total = (stop - start)
-    print(f"Total time elapsed: {total}")
     
-
-
+    
 
 if __name__ == "__main__":
     task_name = input("Enter a task name: ")
