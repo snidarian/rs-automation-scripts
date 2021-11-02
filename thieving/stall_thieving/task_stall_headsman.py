@@ -9,7 +9,6 @@ import random
 from colorama import Fore
 
 
-
 SCREEN_RESOLUTION = pyautogui.size()
 
 
@@ -34,7 +33,7 @@ def choose_random_cursor_tween() -> object:
 
 def skew_perfect_midpoints(x_mid, y_mid) -> int:
     # skewing amount calculated randomly - This number is really important for skewing the midpoint
-    skew_factor = random.randint(1, 152000)
+    skew_factor = random.randint(1, 15000)
     # chooses which way to skew
     flip_flop = random.choice([True, False])
     # make sure the ratios are correct - +30 would have a greater impact on Y than on X in 3880X1080 resolution
@@ -62,7 +61,7 @@ def main():
         y_destination = instruction[1]
         command_action = instruction[2]
         # Variables to create variation in xy click destination coordiantes and time between actions
-        time.sleep(random.uniform(0.0, 0.4))
+        time.sleep(random.uniform(0.0, 0.5))
         xnoise = random.randint(-3, +3)
         ynoise = random.randint(-3, +3)
         # When a mouse coordinate is determined half of the duration variable will be spend travelling to a SKEWED/OFFCENTER midpoint of the destination
