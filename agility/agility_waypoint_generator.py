@@ -10,14 +10,15 @@ import time
 # functions to trigger when keyboard keys are pressed for mouse is clicked
 def on_click(x, y, button, pressed) -> None:
     if button.name == "left" and pressed == True:
-        print(f"Left click at ({x}, {y})")
-        waypoint_journey_list.append([x, y, button.name, (time.perf_counter() - start)])
-        print(f"Left click at ({x}, {y})")
+        waypoint_time = (time.perf_counter() - start)
+        waypoint_journey_list.append([x, y, button.name, waypoint_time])
+        print(f"Left click at ({x}, {y} at {waypoint_time} seconds)")
         
 
     if button.name == "right" and pressed == True:
-        print(f"Right click at ({x}, {y})")
-        waypoint_journey_list.append([x, y, button.name, (time.perf_counter() - start)])
+        waypoint_time = (time.perf_counter() - start)
+        waypoint_journey_list.append([x, y, button.name, waypoint_time])
+        print(f"Right click at ({x}, {y} at {waypoint_time} seconds)")
         
 
 

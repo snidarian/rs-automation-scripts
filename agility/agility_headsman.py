@@ -64,8 +64,8 @@ def main():
         action_duration = instruction[3]
         # Variables to create variation in xy click destination coordiantes and time between actions
         time.sleep(random.uniform(0.0, 0.4))
-        xnoise = random.randint(-5, +5)
-        ynoise = random.randint(-5, +5)
+        xnoise = random.randint(0, 1)
+        ynoise = random.randint(0, 1)
         # When a mouse coordinate is determined half of the duration variable will be spend travelling to a SKEWED/OFFCENTER midpoint of the destination
         # 1. Calculate current mouse xy coordinates
         x_origin, y_origin = pyautogui.position()
